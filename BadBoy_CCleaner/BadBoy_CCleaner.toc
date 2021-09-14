@@ -1,0 +1,18 @@
+## Interface: 30300
+## Version: 3.05
+## Title: BadBoy_CCleaner
+## Notes: |@Version: 1@|Filter crap from your chat.
+## Notes-frFR: Filtre de la connerie dans votre chat.
+## Author: Funkydude
+## Dependencies: BadBoy
+## SavedVariables: BADBOY_CCLEANER, BADBOY_NOICONS
+## X-Category: Chat/Communication
+## X-License: All Rights Reserved
+## X-Curse-Packaged-Version: v3.05
+## X-Curse-Project-Name: BadBoy_CCleaner: Filter Crap From Chat
+## X-Curse-Project-ID: badboy_ccleaner
+## X-Curse-Repository-ID: wow/badboy_ccleaner/mainline
+
+SimpleOptions.lua
+BadBoy_CCleaner.lua
+
