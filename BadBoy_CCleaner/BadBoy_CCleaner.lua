@@ -1,16 +1,7 @@
 
-local knownIcons = { --list of all known raid icon chat shortcuts
-	"{rt%d}",
-	"{x}",
-	"{"..(RAID_TARGET_1):lower().."}",
-	"{"..(RAID_TARGET_2):lower().."}",
-	"{"..(RAID_TARGET_3):lower().."}",
-	"{"..(RAID_TARGET_4):lower().."}",
-	"{"..(RAID_TARGET_5):lower().."}",
-	"{"..(RAID_TARGET_6):lower().."}",
-	"{"..(RAID_TARGET_7):lower().."}",
-	"{"..(RAID_TARGET_8):lower().."}",
-}
+local function removeIconTag(tag)
+	if ICON_TAG_LIST[strlower(tag:sub(2, -2))] then return "" end
+end
 local replace = string.gsub
 BadBoyConfig:RegisterEvent("ADDON_LOADED")
 BadBoyConfig:SetScript("OnEvent", function(frame, evt, addon)
@@ -35,22 +26,19 @@ BadBoyConfig:SetScript("OnEvent", function(frame, evt, addon)
 
 	--main filtering function
 	ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", function(_,_,msg,player,...)
-		local chanid, found, modify = select(5, ...), 0, nil
-		if chanid == 0 then result = nil return end --Only scan official custom channels (gen/trade)
+		local chanid = select(5, ...)
+		if chanid == 0 then return end --Only scan official custom channels (gen/trade)
 		--if not CanComplainChat(player) then return end --Don't filter ourself
-		msg = (msg):lower() --lower all text
+		local lowered = (msg):lower() --lower all text
 		for i=1, #BADBOY_CCLEANER do --scan DB for matches
-			if msg:find(BADBOY_CCLEANER[i], nil, true) then
+			if lowered:find(BADBOY_CCLEANER[i], nil, true) then
 				return true --found a trigger, filter
 			end
 		end
 		if BADBOY_NOICONS then
-			for i = 1, 10 do
-				msg, found = replace(msg, knownIcons[i], "")
-				if found > 0 then modify = true end --Set to true if we remove a raid icon from this message
-			end
-			if modify then --only modify message if we removed an icon
-				return false, msg, player, ...
+			local stripped = replace(msg, "%b{}", removeIconTag)
+			if stripped ~= msg then --only modify message if we removed an icon
+				return false, stripped, player, ...
 			end
 		end
 	end)
