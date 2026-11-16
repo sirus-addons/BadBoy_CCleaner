@@ -3,3 +3,7 @@
 
 Особенности:  
 Удаляет строки чата при обнаружении определенного слова.
+
+**Скриншоты:**
+
+![](https://raw.githubusercontent.com/sirus-addons/BadBoy_CCleaner/master/.screenshots/1.webp)
